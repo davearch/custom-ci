@@ -6,6 +6,9 @@ FROM circleci/php:${PHPVERSION}-node-browsers
 # Switch to root user
 USER root
 
+# fix for chrome
+RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+
 # Install necessary packages for PHP extensions
 RUN apt-get update && \
      apt-get install -y \
@@ -132,3 +135,10 @@ RUN mkdir ~/behat && \
         "behat/mink-extension:^2.2" \
         "behat/mink-goutte-driver:^1.2" \
         "drupal/drupal-extension:*"
+
+# add platformsh-cli
+RUN curl -sS https://platform.sh/cli/installer | php -- --install-dir=/usr/local/bin --filename=platform
+
+# docker-compose
+RUN curl -L https://github.com/docker/compose/releases/download/2.11.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+RUN chmod +x /usr/local/bin/docker-compose
