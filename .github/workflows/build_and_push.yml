@@ -9,7 +9,7 @@ jobs:
     name: Build and push ${{ matrix.php-versions }} Docker image
     strategy:
       matrix:
-        php-versions: ['7.4', '8.0']
+        php-versions: ['8.0']
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -35,7 +35,7 @@ jobs:
           context: .
           push: true
           tags: |
-            pantheonpublic/build-tools-ci:8.x-php${{ matrix.php-versions }}
-            quay.io/pantheon-public/build-tools-ci:8.x-php${{ matrix.php-versions }}
+            darchuletajr/custom-ci:8.x-php${{ matrix.php-versions }}
+            quay.io/darchuletajr/custom-ci:8.x-php${{ matrix.php-versions }}
           build-args: |
             PHPVERSION=${{ matrix.php-versions }}
